@@ -1,0 +1,31 @@
+version: '3'
+services:
+    sms-grafana:
+        ports:
+            - "3000:3000"
+        image: "grafana/grafana"
+        volumes:
+            - v-sms-grafana:/var/lib/influxdb
+        networks: 
+            - sms-network
+            
+    sms-influxdb:
+        ports:
+            - "8086:8086"
+        image: "influxdb:1.7"
+        volumes:
+            - v-sms-influx:/var/lib/grafana
+        networks: 
+            - sms-network
+
+    sms-node-emulator:
+        build: ./sms-node-emulator/
+        networks: 
+            - sms-network
+
+volumes:
+    v-sms-grafana:
+    v-sms-influx:
+    
+networks: 
+    sms-network:
