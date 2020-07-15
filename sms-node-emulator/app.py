@@ -3,7 +3,8 @@ import random
 import time
 
 
-print("HI11111!")
+print("HI!")
+print("Python 3.8-slim, sms-node-emulator 4 nodes every 5 seconds ")
 time.sleep(5)
 print("Wait for other containers...")
 
