@@ -4,12 +4,27 @@ import ttn
 app_id = "arduino-mkr-1310-test"
 access_key = "ttn-account-v2.1yNpDkRAfRnEvrh2fwxO5a4IfrCszOyFEFwTj-DY8rQ"
 
-print("TTN parse to influxDB=======================")
-
+print("TTN parse to influxDB===================")
 
 def writeToInfluxDb(node_data,node_time,node_name):
   for k,v in node_data.items():
     print(">",node_name, " t=", node_time, "msg:", k, ":",v)
+    db="orchard_jaroszki" # mv from app_name in future
+    url = "http://sms-influxdb-container:8086/write?db="+db
+    payload = "k,device=" + node_name + " value="+ str(v)
+
+    headers = {
+    'Content-Type': 'text/plain'
+    }
+
+    response = requests.request("POST", url, headers=headers, data = payload)
+
+    print(payload)
+    print(response.text.encode('utf8'))
+
+
+
+
   print("TODO")
   print(node_name)
   print(node_time)
