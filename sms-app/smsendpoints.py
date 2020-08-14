@@ -30,10 +30,4 @@ def writeToInfluxDB(databasePort = smsvariables.default_port, databaseUrl =smsva
     response = requests.request("POST", url, headers=headers, data = payload)
     time.sleep(2)
     print(response.text.encode('utf8'))
-    print(response.code)
-
-
-   ### response = requests.request("POST", url, headers=headers, data = payload)
-    
-#   time.sleep(2)
-  ###  print(response.text)
+    # print(response.code)
