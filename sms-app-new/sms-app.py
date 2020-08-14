@@ -21,11 +21,15 @@ print("sms app - application for rewrite data from MQTT to endpoints (like HTTP 
 
 smsendpoints.init()
 
+request_tasklist = []
 
-def writeToInfluxDb(node_data,node_time,node_name):
+def messageParser(node_data,node_time,node_name):
     for k,v in node_data.items():
-        smsendpoints.writeToInfluxDB(measurementParameter = k, measurementValue = v)
-        print(">",node_name, " t=", node_time, "msg:", k, ":",v)
+        smsendpoints.writeToInfluxDB( messageTime = node_time, measurementParameter = k, measurementValue = v, measurementNodeName = node_name)
+ #       request_tasklist.append(threading.Thread(target=smsendpoints.writeToInfluxDb, args=(measurementParameter = k, measurementValue = v)))
+#        request_tasklist[-1].start()
+      #  smsendpoints.writeToInfluxDB(measurementParameter = k, measurementValue = v)
+    #    print(">",node_name, " t=", node_time, "msg:", k, ":",v)
  
 
 
@@ -44,8 +48,12 @@ def uplink_callback(msg, client):
   node_time = msg.metadata.time
   node_name = msg.dev_id
   node_data = msg.payload_fields._asdict()
+  messageParser(node_data,node_time,node_name)
 
-  writeToInfluxDb(node_data,node_time,node_name)
+ ### request_tasklist.append(threading.Thread(target=writeToInfluxDb, args=(77,node_name,node_time,k,v)))
+###  request_tasklist[-1].start()
+
+  
 
 handler = ttn.HandlerClient(smsvariables.app_id, smsvariables.access_key)
 

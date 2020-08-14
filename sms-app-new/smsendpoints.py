@@ -9,11 +9,12 @@ Created on Fri Aug 14 09:55:18 2020
 import requests
 from datetime import datetime
 import time
+import smsvariables as smsvariables
 
 def init():
   print ("sms-endpoints init")
   
-def writeToInfluxDB(databasePort = 8086, databaseUrl = "http://sms-pallene.westeurope.cloudapp.azure.com",databaseName = "orchard_jaroszki", messageTime = datetime.now(), measurementParameter = "temporaryTemp", measurementValue = 42, measurementNodeName = "defaultNode"):
+def writeToInfluxDB(databasePort = smsvariables.default_port, databaseUrl =smsvariables.default_url ,databaseName = smsvariables.default_database , messageTime = datetime.now(), measurementParameter = "temporaryTemp", measurementValue = 42, measurementNodeName = "defaultNode"):
     
     print("PARAMETERS:")
     print(databasePort)
