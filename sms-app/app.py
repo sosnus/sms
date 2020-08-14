@@ -1,49 +1,37 @@
+# TODO:
+# CLEAN CODE
+# REMOVE TIME DELAY
+# REMOVE PRINT DEBUG
+# REMOVE SLEEP
+# ADD TIMER IN REQUESTS
+# MAYBE USE PYTHON LIBRARY
+
+
 import time
 import ttn
 
-app_id = "arduino-mkr-1310-test"
-access_key = "ttn-account-v2.1yNpDkRAfRnEvrh2fwxO5a4IfrCszOyFEFwTj-DY8rQ"
+import smsendpoints as smsendpoints
+import smsvariables as smsvariables
 
-print("TTN parse to influxDB=================== 03:28 28.07.2020")
+print("SMSAPP")
+print("sms app - application for rewrite data from MQTT to endpoints (like HTTP requests or data logger)")
 
-def writeToInfluxDb(node_data,node_time,node_name):
-  for k,v in node_data.items():
-    print(">",node_name, " t=", node_time, "msg:", k, ":",v)
-    db="orchard_jaroszki" # mv from app_name in future
-    url = "http://sms-influxdb-container:8086/write?db="+db
-    payload = "k,device=" + node_name + " value="+ str(v)
+request_tasklist = []
 
-    headers = {
-    'Content-Type': 'text/plain'
-    }
-
-    response = requests.request("POST", url, headers=headers, data = payload)
-
-    print(payload)
-    print(response.text.encode('utf8'))
-
-
-
-
-  print("TODO")
-  print(node_name)
-  print(node_time)
-  print(node_data)
-
+def messageParser(node_data,node_time,node_name):
+    for k,v in node_data.items():
+        smsendpoints.writeToInfluxDB( messageTime = node_time, measurementParameter = k, measurementValue = v, measurementNodeName = node_name)
+ #       request_tasklist.append(threading.Thread(target=smsendpoints.writeToInfluxDb, args=(measurementParameter = k, measurementValue = v)))
+#        request_tasklist[-1].start()
 
 def uplink_callback(msg, client):
   print("Received uplink from ", msg.dev_id)
   # print(msg)
   print("----------------------------------")
 
+  messageParser(msg.payload_fields._asdict(),msg.metadata.time,msg.dev_id)
 
-  node_time = msg.metadata.time
-  node_name = msg.dev_id
-  node_data = msg.payload_fields._asdict()
-
-  writeToInfluxDb(node_data,node_time,node_name)
-
-handler = ttn.HandlerClient(app_id, access_key)
+handler = ttn.HandlerClient(smsvariables.app_id, smsvariables.access_key)
 
 # using mqtt client
 mqtt_client = handler.data()
