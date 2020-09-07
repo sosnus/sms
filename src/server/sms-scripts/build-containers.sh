@@ -2,10 +2,12 @@ docker rm sms-node-emulator-container
 docker build -t sms-node-emulator ../sms-node-emulator/
 
 docker rm sms-app
-docker build -t sms-appr ../sms-app/
+docker build -t sms-app ../sms-app/
 
 docker rm sms-app-container
 docker build -t sms-app-container ../sms-app/
+
+docker network create sms-net
 
 docker run -d -p 8086:8086 --name=sms-influxdb-container --network sms-net -v v-sms-influx:/var/lib/influxdb influxdb:1.7
 
