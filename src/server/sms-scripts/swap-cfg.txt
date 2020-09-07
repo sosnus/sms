@@ -1,0 +1,25 @@
+# https://www.3cx.com/blog/docs/swap-space-azure-linux/
+
+Open an SSH session to your Azure Linux instance and run these commands as root or using sudo:
+
+Test the available disk space for your instance:
+df -h
+Edit the Azure Linux Agent configuration file:
+###
+nano /etc/waagent.conf
+###
+Update these parameters:
+###
+ResourceDisk.Format=y
+ResourceDisk.EnableSwap=y
+ResourceDisk.SwapSizeMB=4096
+###
+Set the ResourceDisk.SwapSizeMB value to the number of megabytes to allocate to the swap file. Usually this value can be up to the size of the installed system memory. Make sure you have sufficient available space on the disk to do this.
+Press <Ctrl>+<X>, <Y> and then <Enter> to exit the nano editor and save the waagent.conf file.
+Restart the Azure Linux Agent service:
+service waagent restart
+Verify that your swap file is available:
+swapon -s
+If you followed the instructions but the swap file isnt available at this point, you can try restarting the virtual machine using:
+
+shutdown -r now
