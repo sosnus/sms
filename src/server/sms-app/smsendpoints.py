@@ -5,7 +5,7 @@ import smsvariables as smsvariables
 
   
 def writeToInfluxDB(databasePort = smsvariables.default_port, databaseUrl =smsvariables.default_url ,databaseName = smsvariables.default_database , messageTime = datetime.now(), measurementParameter = "temporaryTemp", measurementValue = 42, measurementNodeName = "defaultNode"):
-    if False:
+    if True:
         print("PARAMETERS:")
         print(databasePort)
         print(databaseUrl)

@@ -26,7 +26,7 @@ def messageParser(node_data,node_time,node_name):
 
 def uplink_callback(msg, client):
   print("Received uplink from ", msg.dev_id)
-  # print(msg)
+  print(msg)
   print("----------------------------------")
 
   messageParser(msg.payload_fields._asdict(),msg.metadata.time,msg.dev_id)
@@ -37,6 +37,7 @@ handler = ttn.HandlerClient(smsvariables.app_id, smsvariables.access_key)
 mqtt_client = handler.data()
 mqtt_client.set_uplink_callback(uplink_callback)
 mqtt_client.connect()
+print("connected!")
 while True:
 	time.sleep(60)
 mqtt_client.close()
