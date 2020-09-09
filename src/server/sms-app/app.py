@@ -14,7 +14,7 @@ import smsendpoints as smsendpoints
 import smsvariables as smsvariables
 
 print("SMSAPP")
-print("sms app - application for rewrite data from MQTT to endpoints (like HTTP requests or data logger)")
+print("sms app - application for rewrite data from MQTT to endpoints")
 
 request_tasklist = []
 
@@ -25,9 +25,9 @@ def messageParser(node_data,node_time,node_name):
 #        request_tasklist[-1].start()
 
 def uplink_callback(msg, client):
-  print("Received uplink from ", msg.dev_id)
-  print(msg)
-  print("----------------------------------")
+  print("Received uplink from < ", msg.dev_id," > " msg.payload_fields)
+#  print(msg)
+#  print("----------------------------------")
 
   messageParser(msg.payload_fields._asdict(),msg.metadata.time,msg.dev_id)
 
