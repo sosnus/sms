@@ -16,7 +16,7 @@ String appKey = SECRET_APP_KEY;
 
 #include "DHT.h"
 
-#define DHTPIN 3   
+#define DHTPIN 3
 #define DHTTYPE DHT11   // DHT 11
 DHT dht(DHTPIN, DHTTYPE);
 
@@ -25,15 +25,20 @@ double val_hum = 50.00;
 double val_batt = 99;
 
 void setup() {
-  
+  pinMode(LED_BUILTIN, OUTPUT);
+  digitalWrite(LED_BUILTIN, HIGH);
   dht.begin();
-  if (!modem.begin(EU868)) 
-  errorBlink(3);
+  if (!modem.begin(EU868))
+  {
+    errorBlink(3);
+  }
   int connected = modem.joinOTAA(appEui, appKey);
-  if (!connected) 
-      errorBlink(4);
-  
+  if (!connected) {
+    errorBlink(4);
+  }
   modem.minPollInterval(60);
+
+  digitalWrite(LED_BUILTIN, LOW);
 }
 void loop() {
   digitalWrite(LED_BUILTIN, HIGH);
@@ -41,11 +46,11 @@ void loop() {
   val_batt = analogRead(A2);
 
   lpp.reset();
-  
+
   lpp.addAnalogInput(1, val_batt);
   lpp.addTemperature(2, val_temp);
   lpp.addRelativeHumidity(3, val_hum);
-  
+
   int err;
   modem.beginPacket();
   modem.write(lpp.getBuffer(), lpp.getSize());
@@ -57,7 +62,7 @@ void loop() {
 
 void getDataFromDHT()
 {
-    delay(2000);
+  delay(2000);
 
   // Reading temperature or humidity takes about 250 milliseconds!
   // Sensor readings may also be up to 2 seconds 'old' (its a very slow sensor)
@@ -71,11 +76,11 @@ void errorBlink(int blink_delay)
 {
   while (1)
   {
-    for (int i = 0; i>blink_delay; i++)
-    digitalWrite(LED_BUILTIN, !digitalRead(2));
+    for (int i = 0; i > blink_delay; i++)
+      digitalWrite(LED_BUILTIN, !digitalRead(2));
     delay(200);
     digitalWrite(LED_BUILTIN, !digitalRead(2));
     delay(200);
   }
-    delay(2000);
+  delay(2000);
 }

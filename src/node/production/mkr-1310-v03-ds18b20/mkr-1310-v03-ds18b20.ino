@@ -12,7 +12,8 @@
 
 #include <OneWire.h>
 
-OneWire  ds(2);  // on pin 10 (a 4.7K resistor is necessary)
+//OneWire  ds(2);
+OneWire  ds(A4);  // on pin 10 (a 4.7K resistor is necessary)
 
   byte i;
   byte present = 0;
