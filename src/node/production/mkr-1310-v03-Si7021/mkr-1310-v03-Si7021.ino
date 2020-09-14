@@ -18,6 +18,9 @@ LoRaModem modem;
 String appEui = SECRET_APP_EUI;
 String appKey = SECRET_APP_KEY;
 
+#define INTERVAL  300*1000
+// interval in milliseconds
+
 #define CONST_VOLTAGE 0.2588235294117647
 
 void setup() {
@@ -51,7 +54,7 @@ void loop() {
   err = modem.endPacket(false);
   digitalWrite(LED_BUILTIN, LOW);
   //LowPower.sleep(10000);
-  delay(8000);
+  delay(INTERVAL);
 }
 
 
