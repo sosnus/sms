@@ -17,9 +17,8 @@ LoRaModem modem;
 
 String appEui = SECRET_APP_EUI;
 String appKey = SECRET_APP_KEY;
+int interval = INTERVAL;
 
-#define INTERVAL  300*1000
-// interval in milliseconds
 
 #define CONST_VOLTAGE 0.2588235294117647
 
