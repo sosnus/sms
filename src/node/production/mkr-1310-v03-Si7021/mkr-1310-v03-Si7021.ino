@@ -52,8 +52,8 @@ void loop() {
   modem.write(lpp.getBuffer(), lpp.getSize());
   err = modem.endPacket(false);
   digitalWrite(LED_BUILTIN, LOW);
-  //LowPower.sleep(10000);
-  delay(INTERVAL);
+  LowPower.sleep(INTERVAL);
+  //delay(10000);
 }
 
 
