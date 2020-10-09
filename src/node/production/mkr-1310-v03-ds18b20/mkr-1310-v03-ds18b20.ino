@@ -65,7 +65,7 @@ float val_temp = ds18b20_read();
   modem.write(lpp.getBuffer(), lpp.getSize());
   err = modem.endPacket(false);
   digitalWrite(TEMP_LED_D3, HIGH);
-  LowPower.sleep(10000);
+  LowPower.sleep(INTERVAL);
   //delay(8000);
 }
 
