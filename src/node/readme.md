@@ -10,7 +10,13 @@
 | just label |End device id|
 | SECRET_APP_EUI|JoinEUI|
 |SECRET_APP_KEY|AppKey|
-
+|-------|---|
+|Session information|-|
+| 4B |Device address|
+| 32B |NwkSKey|
+| 32B |SNwkSIntKey|
+| 32B |NwkSEncKey|
+| 32B |AppSKey|
 
 
 deviceID green: a861....
