@@ -7,10 +7,9 @@
 |Arduino|TTI|
 |-------|---|
 | device ID | DevEUI |
-| NOPE|End device id|
+| just label |End device id|
 | SECRET_APP_EUI|JoinEUI|
-| NOPE|DevEUI|
-|SECRET_APP_KEY|??|
+|SECRET_APP_KEY|AppKey|
 
 
 
